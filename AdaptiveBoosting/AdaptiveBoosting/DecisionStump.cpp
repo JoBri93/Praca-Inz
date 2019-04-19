@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "DecisionStump.h"
 
-
 DecisionStump::DecisionStump()
 {
 }
@@ -25,17 +24,31 @@ bool DecisionStump::LoadFile(string filename)
 	{
 		categoriesContainer.push_back(new_line);
 	}
-	vector<float> temp;
+
+	vector<float> temp1;
+	vector<vector<float>> temp2;
 	while (getline(file, line))
 	{
 		istringstream iss(line);
 		while (getline(iss, new_line, ';'))
 		{
-			temp.push_back(strtof(new_line.c_str(), 0));
+			temp1.push_back(strtof(new_line.c_str(), 0));
 		}
-		dataContainer.push_back(temp);
-		temp.clear();
+		temp2.push_back(temp1);
+		temp1.clear();
 	}
+
+	vector<float> temp3;
+	for (int j = 0; j < temp2[0].size(); j++)
+	{
+		for (int i = 0; i < temp2.size(); i++)
+		{
+			temp3.push_back(temp2[i][j]);
+		}
+		dataContainer.push_back(temp3);
+		temp3.clear();
+	}
+
 	file.close();
 
 	cout << "CATEGORIES:" << endl;
@@ -45,19 +58,64 @@ bool DecisionStump::LoadFile(string filename)
 	}
 }
 
-void DecisionStump::ClassifyData(int decisionAttribute, float decisionCondition, bool greaterThan)
+void DecisionStump::selectOutput(int attribute)
 {
-	for (int i=0; i<dataContainer.size(); i++)
+	for (int i = 0; i < dataContainer[attribute].size(); i++)
 	{
-		if (greaterThan)
+		output.push_back(dataContainer[attribute][i]);
+	}
+}
+
+
+void DecisionStump::SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int feature)
+{
+	sort(idx.begin(), idx.end(), [&X, &feature](size_t i1, size_t i2) {return X[feature][i1] < X[feature][i2]; });
+}
+
+void DecisionStump::CreateSortedIndexesMatrix()
+{
+	vector<int> Indices(dataContainer[0].size());
+	iota(begin(Indices), end(Indices), 0);
+
+	for (int i = 0; i < dataContainer.size(); i++)
+	{
+		vector<int> sorted = Indices;
+		SortIndexes(dataContainer, sorted, i);
+		sortedIndices.push_back(sorted);
+	}
+}
+
+int DecisionStump::Classify(int decisionAttribute, int sample, float decisionCondition, bool greaterThan)
+{
+	int result;
+	if (greaterThan)
+	{
+		if (dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;// classificationResult.push_back(1);
+		else result = 0;// classificationResult.push_back(0);
+	}
+	else
+	{
+		if (dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;// classificationResult.push_back(1);
+		else result = 0;// classificationResult.push_back(0);
+	}
+	return result;
+}
+
+void DecisionStump::Train()
+{
+	float error = FLT_MAX, err_temp;
+	float threshold;
+	int ind, ind_next;
+	int d;
+	for (int i=0; i<sortedIndices.size(); i++)
+	{
+		for (int j=0; j<sortedIndices[i].size(); j++)
 		{
-			if (dataContainer[i][decisionAttribute] > decisionCondition) classificationResult.push_back(1);
-			else classificationResult.push_back(0);
-		}
-		else
-		{
-			if (dataContainer[i][decisionAttribute] < decisionCondition) classificationResult.push_back(1);
-			else classificationResult.push_back(0);
+			ind = sortedIndices[i][j];
+			ind_next = sortedIndices[i][j + 1];
+			threshold = (dataContainer[i][ind] + dataContainer[i][ind_next]) / 2;
+			d = Classify(i, ind, threshold, false);
+			err_temp = d-output[ind];
 		}
 	}
 }

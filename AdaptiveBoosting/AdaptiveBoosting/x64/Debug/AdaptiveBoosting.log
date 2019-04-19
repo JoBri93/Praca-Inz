@@ -1,0 +1,8 @@
+﻿  pch.cpp
+  AdaBoost.cpp
+  AdaptiveBoosting.cpp
+  DecisionStump.cpp
+  Generowanie kodu...
+D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\AdaptiveBoosting\DecisionStump.cpp(59): warning C4715: "DecisionStump::LoadFile”: niewszystkie ścieżki kodu zwracają wartość
+D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\AdaptiveBoosting\DecisionStump.cpp(135): warning C4715: "DecisionStump::SaveFile”: niewszystkie ścieżki kodu zwracają wartość
+  AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe

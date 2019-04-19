@@ -15,6 +15,6 @@ int main()
 {
     cout << "Welcome to ADABOOST!\n"; 
 	classifier.LoadFile("../Data/Absenteeism_at_work.txt");
-	classifier.ClassifyData(8,30,false);
+	classifier.CreateSortedIndexesMatrix();
 	classifier.SaveFile("../ClassifiedData/Absenteeism_at_work_NEW.txt");
 }
