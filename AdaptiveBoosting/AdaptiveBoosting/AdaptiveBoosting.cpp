@@ -14,7 +14,8 @@ DecisionStump classifier;
 int main()
 {
     cout << "Welcome to ADABOOST!\n"; 
-	classifier.LoadFile("../Data/Absenteeism_at_work.txt");
-	classifier.CreateSortedIndexesMatrix();
-	classifier.SaveFile("../ClassifiedData/Absenteeism_at_work_NEW.txt");
+	classifier.LoadFile("../Data/Test_data.txt");
+	classifier.selectOutput(2);
+	classifier.Train();
+	classifier.SaveFile("../ClassifiedData/Test_data_NEW.txt");
 }

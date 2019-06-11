@@ -9,12 +9,22 @@
 
 using namespace std;
 
+struct parameters {
+	int attr;
+	float threshold;
+	bool isGreaterThan;
+};
+
 class DecisionStump
 {
 private:
 	void SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int feature);
+	void CreateSortedIndexesMatrix();
+	void TransposeDataMatrix(vector<vector<float> > &b);
 
 public:
+	vector<parameters> trainedParameters;
+
 	vector<string> categoriesContainer;
 	vector<vector<float>> dataContainer;
 	string decisionAttribute;
@@ -27,11 +37,8 @@ public:
 	bool SaveFile(string filename);
 	
 	void selectOutput(int attribute);
-	void CreateSortedIndexesMatrix();
 	int Classify(int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
 	void Train();
-
-
 
 	DecisionStump();
 	~DecisionStump();
