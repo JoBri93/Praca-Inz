@@ -1,4 +1,2 @@
-﻿  DecisionStump.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(45): warning C4715: 'DecisionStump::LoadFile': not all control paths return a value
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(175): warning C4715: 'DecisionStump::SaveFile': not all control paths return a value
+﻿  AdaptiveBoosting.cpp
   AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe

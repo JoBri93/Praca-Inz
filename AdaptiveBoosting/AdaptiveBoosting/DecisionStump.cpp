@@ -10,9 +10,9 @@ DecisionStump::~DecisionStump()
 {
 }
 
+
 bool DecisionStump::LoadFile(string filename)
 {
-
 	ifstream file;
 	file.open(filename.c_str(), ios::in);
 	if (file.fail())
@@ -41,7 +41,6 @@ bool DecisionStump::LoadFile(string filename)
 	file.close();
 
 	TransposeDataMatrix(dataContainer);
-
 }
 
 void DecisionStump::TransposeDataMatrix(vector<vector<float>> &b)
@@ -62,7 +61,7 @@ void DecisionStump::TransposeDataMatrix(vector<vector<float>> &b)
 	b = trans_vec;
 }
 
-void DecisionStump::selectOutput(int attribute)
+void DecisionStump::SelectOutput(int attribute)
 {
 	for (int i = 0; i < dataContainer[attribute].size(); i++)
 	{
@@ -140,7 +139,7 @@ void DecisionStump::Train()
 			{
 				trained.attr = ind;
 				trained.threshold = threshold;
-				trained.attr = true;
+				trained.isGreaterThan = true;
 				trainedParameters.push_back(trained);
 				break;
 			}

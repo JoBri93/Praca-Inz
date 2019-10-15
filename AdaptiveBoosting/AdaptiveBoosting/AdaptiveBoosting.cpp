@@ -15,7 +15,7 @@ int main()
 {
     cout << "Welcome to ADABOOST!\n"; 
 	classifier.LoadFile("../Data/Test_data.txt");
-	classifier.selectOutput(2);
+	classifier.SelectOutput(3);
 	classifier.Train();
 	classifier.SaveFile("../ClassifiedData/Test_data_NEW.txt");
 }

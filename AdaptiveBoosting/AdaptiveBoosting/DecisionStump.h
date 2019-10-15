@@ -36,7 +36,7 @@ public:
 	bool LoadFile(string filename);
 	bool SaveFile(string filename);
 	
-	void selectOutput(int attribute);
+	void SelectOutput(int attribute);
 	int Classify(int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
 	void Train();
 
