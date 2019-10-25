@@ -23,7 +23,7 @@ private:
 	void TransposeDataMatrix(vector<vector<float> > &b);
 
 public:
-	vector<parameters> trainedParameters;
+	parameters trainedParameters;
 
 	vector<string> categoriesContainer;
 	vector<vector<float>> dataContainer;
@@ -38,6 +38,7 @@ public:
 	
 	void SelectOutput(int attribute);
 	int Classify(int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
+	int Classify(int sample);
 	void Train();
 
 	DecisionStump();

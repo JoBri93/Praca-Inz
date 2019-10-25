@@ -94,12 +94,33 @@ int DecisionStump::Classify(int decisionAttribute, int sample, float decisionCon
 	if (greaterThan)
 	{
 		if (dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
-		else result = 0;
+		else result = -1;
 	}
 	else
 	{
 		if (dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
-		else result = 0;
+		else result = -1;
+	}
+	return result;
+}
+
+int DecisionStump::Classify(int sample)
+{
+	int result;
+
+	int decisionAttribute = trainedParameters.attr;
+	float decisionCondition = trainedParameters.threshold;
+	bool greaterThan = trainedParameters.isGreaterThan;
+
+	if (greaterThan)
+	{
+		if (dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
+		else result = -1;
+	}
+	else
+	{
+		if (dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
+		else result = -1;
 	}
 	return result;
 }
@@ -112,7 +133,6 @@ void DecisionStump::Train()
 	float threshold;
 	int ind, ind_next;
 	int d;
-	parameters trained;
 
 	for (int i=0; i<sortedIndices.size(); i++)
 	{
@@ -122,25 +142,35 @@ void DecisionStump::Train()
 			if(j + 1 < sortedIndices[i].size()) ind_next = sortedIndices[i][j + 1];
 			else ind_next = sortedIndices[i][j];
 			threshold = (dataContainer[i][ind] + dataContainer[i][ind_next]) / 2;
-			d = Classify(i, ind, threshold, false);
-			err_temp = d-output[ind];
+			err_temp = 0;
+			for (int k=0; k<sortedIndices[i].size(); k++)
+			{
+				d = Classify(i, ind, threshold, false);
+				err_temp += d - output[ind];
+			}
+			
 			if (err_temp<error)
 			{
-				trained.attr = ind;
-				trained.threshold = threshold;
-				trained.isGreaterThan = false;
-				trainedParameters.push_back(trained);
+				trainedParameters.attr = i;
+				trainedParameters.threshold = threshold;
+				trainedParameters.isGreaterThan = false;
+				error = err_temp;
 				break;
 			}
-			error = err_temp;
-			d = Classify(i, ind, threshold, true);
-			err_temp = d - output[ind];
+			err_temp = 0;
+			
+			for (int k = 0; k < sortedIndices[i].size(); k++)
+			{
+				d = Classify(i, ind, threshold, true);
+				err_temp += d - output[ind];
+			}
+
 			if (err_temp<error)
 			{
-				trained.attr = ind;
-				trained.threshold = threshold;
-				trained.isGreaterThan = true;
-				trainedParameters.push_back(trained);
+				trainedParameters.attr = ind;
+				trainedParameters.threshold = threshold;
+				trainedParameters.isGreaterThan = true;
+				error = err_temp;
 				break;
 			}
 		}
