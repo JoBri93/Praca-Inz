@@ -10,12 +10,14 @@
 using namespace std;
 
 DecisionStump classifier;
+AdaBoost adaboost;
 
 int main()
 {
     cout << "Welcome to ADABOOST!\n"; 
 	classifier.LoadFile("../Data/Test_data.txt");
 	classifier.SelectOutput(3);
-	classifier.Train();
+	//classifier.Train();
+	adaboost.Start(classifier,3);
 	classifier.SaveFile("../ClassifiedData/Test_data_NEW.txt");
 }

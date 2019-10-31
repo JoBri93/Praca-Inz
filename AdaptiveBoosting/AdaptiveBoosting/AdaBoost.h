@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "DecisionStump.h"
+#include <math.h>
 
 class AdaBoost
 {
@@ -10,7 +11,7 @@ private:
 //	vector<float> weights;
 
 public:
-	void Train(DecisionStump classifier);
+	void Start(DecisionStump classifier,int T);
 
 	AdaBoost();
 	~AdaBoost();

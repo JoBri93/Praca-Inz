@@ -12,59 +12,45 @@ AdaBoost::~AdaBoost()
 }
 
 
-void AdaBoost::Train(DecisionStump classifier)
+void AdaBoost::Start(DecisionStump classifier, int T)
 {
 	vector<float> weights;
 	int n = classifier.output.size();
+	vector<float> y = classifier.output;
+	vector<int> d;
 	for (int i=0; i<n; i++)
 	{
-		weights.push_back(1/n);
+		weights.push_back(1.0/n);
 	}
-
-	int attribute = classifier.trainedParameters.attr;
-
-	float error = FLT_MAX, err_temp;
-	float threshold;
-	int ind, ind_next;
-	int d;
-
-	/* for (int j = 0; j < n; j++)
+	
+	for (int t = 0; t < T; t++)
 	{
-		ind = classifier.sortedIndices[][j];
-		if (j + 1 < n) ind_next = classifier.sortedIndices[i][j + 1];
-		else ind_next = sortedIndices[i][j];
-		threshold = (dataContainer[attribute][ind] + dataContainer[i][ind_next]) / 2;
-		err_temp = 0;
-		for (int k = 0; k < sortedIndices[i].size(); k++)
+		classifier.Train(weights);
+
+		for (int i = 0; i < n; i++)
 		{
-			d = Classify(i, ind, threshold, false);
-			err_temp += d - output[ind];
+			d.push_back(classifier.Classify(i));
 		}
 
-		if (err_temp < error)
-		{
-			trainedParameters.attr = i;
-			trainedParameters.threshold = threshold;
-			trainedParameters.isGreaterThan = false;
-			error = err_temp;
-			break;
-		}
-		err_temp = 0;
+		float error = 0;
 
-		for (int k = 0; k < sortedIndices[i].size(); k++)
+		for (int i = 0; i < n; i++)
 		{
-			d = Classify(i, ind, threshold, true);
-			err_temp += d - output[ind];
+			if (d[i] != y[i]) error += weights[i];
 		}
 
-		if (err_temp < error)
-		{
-			trainedParameters.attr = ind;
-			trainedParameters.threshold = threshold;
-			trainedParameters.isGreaterThan = true;
-			error = err_temp;
-			break;
-		}
-	}*/
+		float alfa;
+		alfa = 0.5 * log((1 - error) / error);
 
+		float w_sum = 0;
+		for (int i = 0; i < n; i++)
+		{
+			weights[i] = weights[i] * exp(-alfa * y[i] * d[i]);
+			w_sum += weights[i];
+		}
+		for (int i = 0; i < n; i++)
+		{
+			weights[i] = weights[i] / w_sum;
+		}
+	}
 }

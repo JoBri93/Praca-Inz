@@ -40,6 +40,7 @@ public:
 	int Classify(int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
 	int Classify(int sample);
 	void Train();
+	void Train(vector<float> weights);
 
 	DecisionStump();
 	~DecisionStump();

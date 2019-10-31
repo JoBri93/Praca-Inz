@@ -41,6 +41,7 @@ bool DecisionStump::LoadFile(string filename)
 	file.close();
 
 	TransposeDataMatrix(dataContainer);
+	CreateSortedIndexesMatrix();
 }
 
 void DecisionStump::TransposeDataMatrix(vector<vector<float>> &b)
@@ -127,7 +128,7 @@ int DecisionStump::Classify(int sample)
 
 void DecisionStump::Train()
 {
-	CreateSortedIndexesMatrix();
+	//CreateSortedIndexesMatrix();
 
 	float error = FLT_MAX, err_temp;
 	float threshold;
@@ -166,6 +167,56 @@ void DecisionStump::Train()
 			}
 
 			if (err_temp<error)
+			{
+				trainedParameters.attr = ind;
+				trainedParameters.threshold = threshold;
+				trainedParameters.isGreaterThan = true;
+				error = err_temp;
+				break;
+			}
+		}
+	}
+}
+
+void DecisionStump::Train(vector<float> weights)
+{
+	float error = FLT_MAX, err_temp;
+	float threshold;
+	int ind, ind_next;
+	int d;
+
+	for (int i = 0; i < sortedIndices.size(); i++)
+	{
+		for (int j = 0; j < sortedIndices[i].size(); j++)
+		{
+			ind = sortedIndices[i][j];
+			if (j + 1 < sortedIndices[i].size()) ind_next = sortedIndices[i][j + 1];
+			else ind_next = sortedIndices[i][j];
+			threshold = (dataContainer[i][ind] + dataContainer[i][ind_next]) / 2;
+			err_temp = 0;
+			for (int k = 0; k < sortedIndices[i].size(); k++)
+			{
+				d = Classify(i, ind, threshold, false);
+				err_temp += weights[ind]*(d - output[ind]);
+			}
+
+			if (err_temp < error)
+			{
+				trainedParameters.attr = i;
+				trainedParameters.threshold = threshold;
+				trainedParameters.isGreaterThan = false;
+				error = err_temp;
+				break;
+			}
+			err_temp = 0;
+
+			for (int k = 0; k < sortedIndices[i].size(); k++)
+			{
+				d = Classify(i, ind, threshold, true);
+				err_temp += weights[ind]*(d - output[ind]);
+			}
+
+			if (err_temp < error)
 			{
 				trainedParameters.attr = ind;
 				trainedParameters.threshold = threshold;
