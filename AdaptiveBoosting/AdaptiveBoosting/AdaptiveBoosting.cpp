@@ -2,6 +2,7 @@
 //
 
 #include "pch.h"
+#include "Data.h"
 #include "DecisionStump.h"
 #include "AdaBoost.h"
 
@@ -9,15 +10,22 @@
 
 using namespace std;
 
+Data data1;
 DecisionStump classifier;
 AdaBoost adaboost;
 
 int main()
 {
     cout << "Welcome to ADABOOST!\n"; 
-	classifier.LoadFile("../Data/Test_data.txt");
-	classifier.SelectOutput(3);
+	data1.LoadFile("../Data/Test_data.txt");
+	data1.SelectOutput(3);
+	classifier.Train(data1);
+
+	//classifier.LoadFile("../Data/Test_data.txt");
+	//classifier.SelectOutput(3);
+	//classifier.LoadFile("../Data/Test_data.txt");
+	//classifier.SelectOutput(3);
 	//classifier.Train();
-	adaboost.Start(classifier,3);
-	classifier.SaveFile("../ClassifiedData/Test_data_NEW.txt");
+	adaboost.Start(data1,classifier,3);
+	//classifier.SaveFile("../ClassifiedData/Test_data_NEW.txt");
 }

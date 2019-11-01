@@ -7,11 +7,11 @@
 class AdaBoost
 {
 private:
-//	DecisionStump classifier;
-//	vector<float> weights;
+	vector<float> alpha;
+	vector<DecisionStump> weakClassifiers;
 
 public:
-	void Start(DecisionStump classifier,int T);
+	void Start(Data data1, DecisionStump classifier,int T);
 
 	AdaBoost();
 	~AdaBoost();

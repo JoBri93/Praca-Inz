@@ -1,4 +1,9 @@
-﻿  DecisionStump.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(45): warning C4715: 'DecisionStump::LoadFile': not all control paths return a value
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(255): warning C4715: 'DecisionStump::SaveFile': not all control paths return a value
+﻿  AdaBoost.cpp
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(23): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe
