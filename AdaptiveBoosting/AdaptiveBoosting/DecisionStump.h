@@ -21,10 +21,10 @@ class DecisionStump
 public:
 	parameters trainedParameters;
 
-	int Classify(Data data1, int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
-	int Classify(Data data1, int sample);
-	void Train(Data data1);
-	void Train(Data data1, vector<float> weights);
+	int Classify(Data dataset, int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
+	int Classify(Data dataset, int sample);
+	void Train(Data dataset);
+	void Train(Data dataset, vector<float> weights);
 
 	DecisionStump();
 	~DecisionStump();

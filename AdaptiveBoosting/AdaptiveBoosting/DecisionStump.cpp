@@ -10,23 +10,23 @@ DecisionStump::~DecisionStump()
 {
 }
 
-int DecisionStump::Classify(Data data1,int decisionAttribute, int sample, float decisionCondition, bool greaterThan)
+int DecisionStump::Classify(Data dataset,int decisionAttribute, int sample, float decisionCondition, bool greaterThan)
 {
 	int result;
 	if (greaterThan)
 	{
-		if (data1.dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
+		if (dataset.dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
 		else result = -1;
 	}
 	else
 	{
-		if (data1.dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
+		if (dataset.dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
 		else result = -1;
 	}
 	return result;
 }
 
-int DecisionStump::Classify(Data data1, int sample)
+int DecisionStump::Classify(Data dataset, int sample)
 {
 	int result;
 
@@ -36,39 +36,41 @@ int DecisionStump::Classify(Data data1, int sample)
 
 	if (greaterThan)
 	{
-		if (data1.dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
+		if (dataset.dataContainer[decisionAttribute][sample] > decisionCondition) result = 1;
 		else result = -1;
 	}
 	else
 	{
-		if (data1.dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
+		if (dataset.dataContainer[decisionAttribute][sample] <= decisionCondition) result = 1;
 		else result = -1;
 	}
 	return result;
 }
 
-void DecisionStump::Train(Data data1)
+void DecisionStump::Train(Data dataset)
 {
 	float error = FLT_MAX, err_temp;
 	float threshold;
-	int ind, ind_next;
+	int idx, idx_next;
 	int d;
+	int m = dataset.dataContainer.size();
+	int n = dataset.output.size();
 
-	for (int i=0; i<data1.dataContainer.size(); i++)
+	for (int i=0; i < m; i++)
 	{
-		for (int j=0; j<data1.sortedIndices[i].size(); j++)
+		for (int j=0; j<n; j++)
 		{
-			ind = data1.sortedIndices[i][j];
-			if(j + 1 < data1.sortedIndices[i].size()) ind_next = data1.sortedIndices[i][j + 1];
-			else ind_next = data1.sortedIndices[i][j];
-			threshold = (data1.dataContainer[i][ind] + data1.dataContainer[i][ind_next]) / 2;
+			idx = dataset.sortedIndices[i][j];
+			if(j + 1 < dataset.sortedIndices[i].size()) idx_next = dataset.sortedIndices[i][j + 1];
+			else idx_next = dataset.sortedIndices[i][j];
+			threshold = (dataset.dataContainer[i][idx] + dataset.dataContainer[i][idx_next]) / 2;
+
 			err_temp = 0;
-			for (int k=0; k<data1.sortedIndices[i].size(); k++)
+			for (int k=0; k < n; k++)
 			{
-				d = Classify(data1, i, ind, threshold, false);
-				err_temp += d - data1.output[ind];
+				d = Classify(dataset, i, idx, threshold, false);
+				err_temp += d - dataset.output[idx];
 			}
-			
 			if (err_temp<error)
 			{
 				trainedParameters.attr = i;
@@ -77,17 +79,17 @@ void DecisionStump::Train(Data data1)
 				error = err_temp;
 				break;
 			}
-			err_temp = 0;
-			
-			for (int k = 0; k < data1.sortedIndices[i].size(); k++)
+
+			err_temp = 0;		
+			for (int k = 0; k < n; k++)
 			{
-				d = Classify(data1, i, ind, threshold, true);
-				err_temp += d - data1.output[ind];
+				d = Classify(dataset, i, idx, threshold, true);
+				err_temp += d - dataset.output[idx];
 			}
 
 			if (err_temp<error)
 			{
-				trainedParameters.attr = ind;
+				trainedParameters.attr = i;
 				trainedParameters.threshold = threshold;
 				trainedParameters.isGreaterThan = true;
 				error = err_temp;
@@ -97,28 +99,31 @@ void DecisionStump::Train(Data data1)
 	}
 }
 
-void DecisionStump::Train(Data data1, vector<float> weights)
+void DecisionStump::Train(Data dataset, vector<float> weights)
 {
 	float error = FLT_MAX, err_temp;
 	float threshold;
-	int ind, ind_next;
+	int idx, idx_next;
 	int d;
+	int m = dataset.dataContainer.size();
+	int n = dataset.output.size();
 
-	for (int i = 0; i < data1.dataContainer.size(); i++)
+	for (int i = 0; i < m; i++)
 	{
-		for (int j = 0; j < data1.sortedIndices[i].size(); j++)
+		for (int j = 0; j < n; j++)
 		{
-			ind = data1.sortedIndices[i][j];
-			if (j + 1 < data1.sortedIndices[i].size()) ind_next = data1.sortedIndices[i][j + 1];
-			else ind_next = data1.sortedIndices[i][j];
-			threshold = (data1.dataContainer[i][ind] + data1.dataContainer[i][ind_next]) / 2;
-			err_temp = 0;
-			for (int k = 0; k < data1.sortedIndices[i].size(); k++)
-			{
-				d = Classify(data1, i, ind, threshold, false);
-				err_temp += weights[ind]*(d - data1.output[ind]);
-			}
+			idx = dataset.sortedIndices[i][j];
+			if (j + 1 < dataset.sortedIndices[i].size()) idx_next = dataset.sortedIndices[i][j + 1];
+			else idx_next = dataset.sortedIndices[i][j];
 
+			threshold = (dataset.dataContainer[i][idx] + dataset.dataContainer[i][idx_next]) / 2;
+
+			err_temp = 0;
+			for (int k = 0; k < n; k++)
+			{
+				d = Classify(dataset, i, idx, threshold, false);
+				err_temp += weights[idx]*(d - dataset.output[idx]);
+			}
 			if (err_temp < error)
 			{
 				trainedParameters.attr = i;
@@ -127,17 +132,17 @@ void DecisionStump::Train(Data data1, vector<float> weights)
 				error = err_temp;
 				break;
 			}
-			err_temp = 0;
 
-			for (int k = 0; k < data1.sortedIndices[i].size(); k++)
+			err_temp = 0;
+			for (int k = 0; k < n; k++)
 			{
-				d = Classify(data1, i, ind, threshold, true);
-				err_temp += weights[ind]*(d - data1.output[ind]);
+				d = Classify(dataset, i, idx, threshold, true);
+				err_temp += weights[idx]*(d - dataset.output[idx]);
 			}
 
 			if (err_temp < error)
 			{
-				trainedParameters.attr = ind;
+				trainedParameters.attr = i;
 				trainedParameters.threshold = threshold;
 				trainedParameters.isGreaterThan = true;
 				error = err_temp;

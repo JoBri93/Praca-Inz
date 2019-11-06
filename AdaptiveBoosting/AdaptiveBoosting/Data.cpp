@@ -93,7 +93,14 @@ void Data::SelectOutput(int attribute)
 {
 	for (int i = 0; i < dataContainer[attribute].size(); i++)
 	{
-		output.push_back(dataContainer[attribute][i]);
+		if (dataContainer[attribute][i] == 0)
+		{
+			output.push_back(-1);
+		}
+		else
+		{
+			output.push_back(dataContainer[attribute][i]);
+		}
 	}
 	dataContainer.erase(dataContainer.begin() + attribute);
 }

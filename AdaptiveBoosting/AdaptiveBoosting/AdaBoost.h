@@ -11,7 +11,8 @@ private:
 	vector<DecisionStump> weakClassifiers;
 
 public:
-	void Start(Data data1, DecisionStump classifier,int T);
+	vector<float> Boost(Data dataset, DecisionStump classifier,int T);
+	void PrintResult();
 
 	AdaBoost();
 	~AdaBoost();
