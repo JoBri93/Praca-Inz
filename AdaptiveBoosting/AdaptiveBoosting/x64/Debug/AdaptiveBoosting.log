@@ -1,21 +1,2 @@
-﻿  AdaBoost.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(26): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(35): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(46): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  AdaptiveBoosting.cpp
-  DecisionStump.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(56): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(57): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(108): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(109): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
+﻿  AdaptiveBoosting.cpp
   AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe

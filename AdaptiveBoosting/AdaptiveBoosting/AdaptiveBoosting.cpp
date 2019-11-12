@@ -19,6 +19,6 @@ int main()
     cout << "Welcome to ADABOOST!\n"; 
 	dataset.LoadFile("../Data/test-fertility_diagnosis.txt");
 	dataset.SelectOutput(2);
-	adaboost.Boost(dataset,classifier,10);
+	adaboost.Boost(dataset,classifier,15);
 	adaboost.PrintResult();
 }
