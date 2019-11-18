@@ -13,7 +13,6 @@ class Data
 {
 private:
 	void SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int feature);
-	void CreateSortedIndexesMatrix();
 	void TransposeDataMatrix(vector<vector<float>> &b);
 
 public:
@@ -25,7 +24,7 @@ public:
 
 	bool LoadFile(string filename);
 	bool SaveFile(string filename);
-
+	void CreateSortedIndexesMatrix();
 	void SelectOutput(int attribute);
 
 	Data();

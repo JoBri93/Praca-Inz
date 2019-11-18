@@ -5,7 +5,7 @@
 #include "Data.h"
 #include "DecisionStump.h"
 #include "AdaBoost.h"
-
+#include <time.h>
 #include <iostream>
 
 using namespace std;
@@ -16,9 +16,28 @@ AdaBoost adaboost;
 
 int main()
 {
-    cout << "Welcome to ADABOOST!\n"; 
+	srand(time(NULL));
+	clock_t begin, end;
+	double time_spent;
+	int iterations = 10;
+
+    cout << "Welcome to ADABOOST!\n" << endl; 
 	dataset.LoadFile("../Data/test-fertility_diagnosis.txt");
 	dataset.SelectOutput(2);
-	adaboost.Boost(dataset,classifier,15);
+
+	begin = clock();
+	adaboost.Boost(dataset, classifier, iterations);
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	adaboost.PrintResult();
+	cout << "Time: " << time_spent << " seconds" << endl << endl;
+
+	adaboost.Clear();
+
+	begin = clock();
+	adaboost.WeightTrimmingBoost(dataset, classifier, iterations);
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	adaboost.PrintResult();
+	cout << "Time: " << time_spent << " seconds" << endl << endl;
 }
