@@ -19,7 +19,7 @@ int main()
 	srand(time(NULL));
 	clock_t begin, end;
 	double time_spent;
-	int iterations = 10;
+	int iterations = 40;
 
     cout << "Welcome to ADABOOST!\n" << endl; 
 	dataset.LoadFile("../Data/test-fertility_diagnosis.txt");
@@ -32,10 +32,19 @@ int main()
 	adaboost.PrintResult();
 	cout << "Time: " << time_spent << " seconds" << endl << endl;
 
-	adaboost.Clear();
-
+	adaboost.Reset();
+	
 	begin = clock();
 	adaboost.WeightTrimmingBoost(dataset, classifier, iterations);
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	adaboost.PrintResult();
+	cout << "Time: " << time_spent << " seconds" << endl << endl;
+
+	adaboost.Reset();
+
+	begin = clock();
+	adaboost.WeightTrimmingBoost(dataset, classifier, iterations, 0.1f);
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	adaboost.PrintResult();
