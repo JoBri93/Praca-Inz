@@ -14,7 +14,7 @@ private:
 public:
 	vector<float> Boost(Data dataset, DecisionStump classifier,int T);
 	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T);
-	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta);
+	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int sample_quantity);
 	float FindQuantile(vector<float> weights);
 	void PrintResult();
 	void Reset();

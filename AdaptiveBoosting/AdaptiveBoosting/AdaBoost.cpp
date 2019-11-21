@@ -230,7 +230,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	return d;
 }
 
-vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta)
+vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int sample_quantity)
 {
 	cout << "Training in progress..." << endl;
 
@@ -257,11 +257,11 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		w_sum = 0;
 		iota(begin(trim_indices), end(trim_indices), 0);
 		sort(trim_indices.begin(), trim_indices.end(), [&weights](size_t i1, size_t i2) {return weights[i1] < weights[i2]; });
-		
+
 		for (int i = 0; i < n; i++)
 		{
 			w_sum += weights[trim_indices[i]];
-			if (w_sum >= beta)
+			if (w_sum > beta || i > sample_quantity)
 			{
 				trim_idx = i;
 				break;		

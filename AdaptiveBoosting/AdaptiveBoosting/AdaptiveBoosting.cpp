@@ -44,7 +44,7 @@ int main()
 	adaboost.Reset();
 
 	begin = clock();
-	adaboost.WeightTrimmingBoost(dataset, classifier, iterations, 0.1f);
+	adaboost.WeightTrimmingBoost(dataset, classifier, iterations, 0.1f, 10);
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	adaboost.PrintResult();

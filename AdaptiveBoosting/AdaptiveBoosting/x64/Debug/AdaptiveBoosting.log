@@ -125,7 +125,4 @@ c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.
           [
               _Ty=int
           ]
-  AdaptiveBoosting.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaptiveboosting.cpp(19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
   AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe
