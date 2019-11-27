@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Data dataset;
+Data dataset[3];
 DecisionStump classifier;
 AdaBoost adaboost;
 
@@ -19,34 +19,34 @@ int main()
 	srand(time(NULL));
 	clock_t begin, end;
 	double time_spent;
-	int iterations = 40;
+	int iterations[3] = { 20, 30, 40 };
+	int max_samples[3] = { 10, 10, 20 };
+	dataset[0].LoadFile("../Data/dataset1-SomervilleHappinessSurvey2015.txt");
+	dataset[1].LoadFile("../Data/dataset3-fertility_Diagnosis.txt");
+	dataset[2].LoadFile("../Data/dataset4-Cryotherapy.txt");
 
     cout << "Welcome to ADABOOST!\n" << endl; 
-	dataset.LoadFile("../Data/test-fertility_diagnosis.txt");
-	dataset.SelectOutput(2);
 
-	begin = clock();
-	adaboost.Boost(dataset, classifier, iterations);
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	adaboost.PrintResult();
-	cout << "Time: " << time_spent << " seconds" << endl << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Dataset " << i+1 << endl << endl;
 
-	adaboost.Reset();
-	
-	begin = clock();
-	adaboost.WeightTrimmingBoost(dataset, classifier, iterations);
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	adaboost.PrintResult();
-	cout << "Time: " << time_spent << " seconds" << endl << endl;
+		begin = clock();
+		adaboost.Boost(dataset[i], classifier, iterations[i]);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		adaboost.PrintResult();
+		cout << "Time: " << time_spent << " seconds" << endl << endl;
 
-	adaboost.Reset();
+		adaboost.Reset();
 
-	begin = clock();
-	adaboost.WeightTrimmingBoost(dataset, classifier, iterations, 0.1f, 10);
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	adaboost.PrintResult();
-	cout << "Time: " << time_spent << " seconds" << endl << endl;
+		begin = clock();
+		adaboost.WeightTrimmingBoost(dataset[i], classifier, iterations[i], 0.1f, max_samples[i]);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		adaboost.PrintResult();
+		cout << "Time: " << time_spent << " seconds" << endl << endl;
+
+		adaboost.Reset();
+	}
 }

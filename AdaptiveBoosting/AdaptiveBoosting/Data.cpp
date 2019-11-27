@@ -43,6 +43,7 @@ bool Data::LoadFile(string filename)
 
 	TransposeDataMatrix(dataContainer);
 	CreateSortedIndexesMatrix();
+	SelectOutput(dataContainer.size()-1);
 }
 
 bool Data::SaveFile(string filename)

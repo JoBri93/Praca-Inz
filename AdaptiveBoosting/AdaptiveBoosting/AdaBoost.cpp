@@ -44,7 +44,7 @@ float AdaBoost::FindQuantile(vector<float> weights)
 
 vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 {
-	cout << "Training in progress..." << endl;
+	cout << "Boost: Training in progress..." << endl;
 
 	vector<float> weights;
 	int n = dataset.output.size();
@@ -232,7 +232,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int sample_quantity)
 {
-	cout << "Training in progress..." << endl;
+	cout << "WeightTrimmingBoost: Training in progress..." << endl;
 
 	vector<float> weights;
 	int n = dataset.output.size();
