@@ -24,7 +24,7 @@ bool Data::LoadFile(string filename)
 	istringstream iss(line);
 	while (getline(iss, new_line, ';'))
 	{
-		categoriesContainer.push_back(new_line);
+		categories_container.push_back(new_line);
 	}
 
 	vector<float> temp1;
@@ -35,36 +35,36 @@ bool Data::LoadFile(string filename)
 		{
 			temp1.push_back(strtof(new_line.c_str(), 0));
 		}
-		dataContainer.push_back(temp1);
+		data_container.push_back(temp1);
 		temp1.clear();
 	}
 
 	file.close();
 
-	TransposeDataMatrix(dataContainer);
+	TransposeDataMatrix(data_container);
 	CreateSortedIndexesMatrix();
-	SelectOutput(dataContainer.size()-1);
+	SelectOutput(data_container.size()-1);
 }
 
 bool Data::SaveFile(string filename)
 {
-	TransposeDataMatrix(dataContainer);
+	TransposeDataMatrix(data_container);
 
 	ofstream file(filename);
 	if (file.fail())
 		return 1;
 
-	for (int i = 0; i < categoriesContainer.size(); i++)
+	for (int i = 0; i < categories_container.size(); i++)
 	{
-		file << categoriesContainer[i];
+		file << categories_container[i];
 		file << ";";
 	}
 	file << endl;
-	for (int j = 0; j < dataContainer.size(); j++)
+	for (int j = 0; j < data_container.size(); j++)
 	{
-		for (int k = 0; k < dataContainer[j].size(); k++)
+		for (int k = 0; k < data_container[j].size(); k++)
 		{
-			file << dataContainer[j][k];
+			file << data_container[j][k];
 			file << ";";
 		}
 		file << endl;
@@ -92,18 +92,18 @@ void Data::TransposeDataMatrix(vector<vector<float>> &b)
 
 void Data::SelectOutput(int attribute)
 {
-	for (int i = 0; i < dataContainer[attribute].size(); i++)
+	for (int i = 0; i < data_container[attribute].size(); i++)
 	{
-		if (dataContainer[attribute][i] == 0)
+		if (data_container[attribute][i] == 0)
 		{
 			output.push_back(-1);
 		}
 		else
 		{
-			output.push_back(dataContainer[attribute][i]);
+			output.push_back(data_container[attribute][i]);
 		}
 	}
-	dataContainer.erase(dataContainer.begin() + attribute);
+	data_container.erase(data_container.begin() + attribute);
 }
 
 void Data::SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int feature)
@@ -113,13 +113,13 @@ void Data::SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int fea
 
 void Data::CreateSortedIndexesMatrix()
 {
-	vector<int> Indices(dataContainer[0].size());
+	vector<int> Indices(data_container[0].size());
 	iota(begin(Indices), end(Indices), 0);
 
-	for (int i = 0; i < dataContainer.size(); i++)
+	for (int i = 0; i < data_container.size(); i++)
 	{
 		vector<int> sorted = Indices;
-		SortIndexes(dataContainer, sorted, i);
-		sortedIndices.push_back(sorted);
+		SortIndexes(data_container, sorted, i);
+		sorted_indices.push_back(sorted);
 	}
 }

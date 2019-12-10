@@ -7,8 +7,8 @@
 class AdaBoost
 {
 private:
-	vector<float> alpha;
-	vector<DecisionStump> weakClassifiers;
+	vector<float> alphas;
+	vector<DecisionStump> weak_classifiers;
 	float err;
 
 public:

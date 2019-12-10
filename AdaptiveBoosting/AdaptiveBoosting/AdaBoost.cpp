@@ -77,8 +77,8 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 
 		a = 0.5 * log((1 - error) / error);
 		
-		weakClassifiers.push_back(classifier);
-		alpha.push_back(a);
+		weak_classifiers.push_back(classifier);
+		alphas.push_back(a);
 
 		w_sum = 0;
 		for (int i = 0; i < n; i++)
@@ -98,7 +98,7 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alpha[t] * weakClassifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -152,14 +152,14 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 			for (int i = 0; i < trim_indices.size(); i++)
 			{
 				reduced_dataset.output.erase(reduced_dataset.output.begin() + trim_indices[i]);
-				for (int j = 0; j < reduced_dataset.dataContainer.size(); j++)
+				for (int j = 0; j < reduced_dataset.data_container.size(); j++)
 				{
-					reduced_dataset.dataContainer[j].erase(reduced_dataset.dataContainer[j].begin() + trim_indices[i]);
+					reduced_dataset.data_container[j].erase(reduced_dataset.data_container[j].begin() + trim_indices[i]);
 				}
 				trimmed_weights.erase(trimmed_weights.begin() + trim_indices[i]);
 			}
 
-			reduced_dataset.sortedIndices.clear();
+			reduced_dataset.sorted_indices.clear();
 			reduced_dataset.CreateSortedIndexesMatrix();
 			trim_indices.clear();
 
@@ -189,8 +189,8 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		a = 0.5 * log((1 - error) / error);
 
-		weakClassifiers.push_back(classifier);
-		alpha.push_back(a);
+		weak_classifiers.push_back(classifier);
+		alphas.push_back(a);
 
 		w_sum = 0;
 		for (int i = 0; i < n; i++)
@@ -214,7 +214,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alpha[t] * weakClassifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -274,14 +274,14 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		for (int i = 0; i < trim_indices.size() ; i++)
 		{
 			reduced_dataset.output.erase(reduced_dataset.output.begin() + trim_indices[i]);
-			for (int j = 0; j < reduced_dataset.dataContainer.size(); j++)
+			for (int j = 0; j < reduced_dataset.data_container.size(); j++)
 			{
-				reduced_dataset.dataContainer[j].erase(reduced_dataset.dataContainer[j].begin() + trim_indices[i]);
+				reduced_dataset.data_container[j].erase(reduced_dataset.data_container[j].begin() + trim_indices[i]);
 			}
 			trimmed_weights.erase(trimmed_weights.begin() + trim_indices[i]);
 		}
 
-		reduced_dataset.sortedIndices.clear();
+		reduced_dataset.sorted_indices.clear();
 		reduced_dataset.CreateSortedIndexesMatrix();
 		trim_indices.clear();
 		trim_indices.resize(n);
@@ -311,8 +311,8 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		a = 0.5 * log((1 - error) / error);
 
-		weakClassifiers.push_back(classifier);
-		alpha.push_back(a);
+		weak_classifiers.push_back(classifier);
+		alphas.push_back(a);
 
 		w_sum = 0;
 		for (int i = 0; i < n; i++)
@@ -336,7 +336,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alpha[t] * weakClassifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -356,17 +356,17 @@ void AdaBoost::PrintResult()
 {
 	cout << "Training complete! Here are the results: " << endl << endl;
 	cout << "Alpha values" << endl;
-	for (int i = 0; i < alpha.size(); i++)
+	for (int i = 0; i < alphas.size(); i++)
 	{
-		cout << alpha[i] << "	";
+		cout << alphas[i] << "	";
 	}
 	cout << endl << endl;
 	cout << "Classifiers' trained parameters" << endl;
-	for (int i = 0; i < weakClassifiers.size(); i++)
+	for (int i = 0; i < weak_classifiers.size(); i++)
 	{
-		cout << "Attribute: " << weakClassifiers[i].trainedParameters.attr << "	" << "Threshold: " << weakClassifiers[i].trainedParameters.threshold << "	";
+		cout << "Attribute: " << weak_classifiers[i].trained_parameters.attr << "	" << "Threshold: " << weak_classifiers[i].trained_parameters.threshold << "	";
 		cout << "Inequality direction: ";
-		if (weakClassifiers[i].trainedParameters.isGreaterThan)
+		if (weak_classifiers[i].trained_parameters.is_greater_than)
 		{
 			cout << ">" << endl;
 		}
@@ -381,7 +381,7 @@ void AdaBoost::PrintResult()
 
 void AdaBoost::Reset()
 {
-	alpha.clear();
-	weakClassifiers.clear();
+	alphas.clear();
+	weak_classifiers.clear();
 	err = 0;
 }

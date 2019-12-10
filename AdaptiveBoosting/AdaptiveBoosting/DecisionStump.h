@@ -13,15 +13,15 @@ using namespace std;
 struct parameters {
 	int attr;
 	float threshold;
-	bool isGreaterThan;
+	bool is_greater_than;
 };
 
 class DecisionStump
 {
 public:
-	parameters trainedParameters;
+	parameters trained_parameters;
 
-	int Classify(Data dataset, int decisionAttribute, int sample, float decisionCondition, bool greaterThan);
+	int Classify(Data dataset, int decision_attribute, int sample, float decision_condition, bool greater_than);
 	int Classify(Data dataset, int sample);
 	void Train(Data dataset);
 	void Train(Data dataset, vector<float> weights);
