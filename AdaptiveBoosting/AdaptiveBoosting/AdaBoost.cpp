@@ -42,30 +42,31 @@ float AdaBoost::FindQuantile(vector<float> weights)
 	return quantile;
 }
 
-vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
+vector<float> AdaBoost::Boost(Data training_set, Data testing_set, DecisionStump classifier, int T)
 {
 	cout << "Boost: Training in progress..." << endl;
 
 	vector<float> weights;
-	int n = dataset.output.size();
-	vector<float> y = dataset.output;
+	int n = training_set.output.size();
+	int m = testing_set.output.size();
+	vector<float> y = training_set.output;
 	vector<float> d;
 	float a;
 	float error;
 	float w_sum;
 
-	for (int i=0; i<n; i++)
+	for (int i = 0; i < n; i++)
 	{
 		weights.push_back(1.0f/n);
 	}
 	
 	for (int t = 0; t < T; t++)
 	{
-		classifier.Train(dataset, weights);
+		classifier.Train(training_set, weights);
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset, i));
+			d.push_back(classifier.Classify(training_set, i));
 		}
 
 		error = 0;
@@ -94,11 +95,12 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 	}
 	
 	float result = 0;
-	for (int i = 0; i < n; i++)
+	y = testing_set.output;
+	for (int i = 0; i < m; i++)
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(testing_set, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -106,21 +108,22 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 		result = 0;
 	}
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < m; i++)
 	{
-		if (d[i] != y[i]) err += 1.0f / n;
+		if (d[i] != y[i]) err += 1.0f / m;
 	}
 
 	return d;
 }
 
-vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T)
+vector<float> AdaBoost::WeightTrimmingBoost(Data training_set, Data testing_set, DecisionStump classifier, int T)
 {
 	cout << "Training in progress..." << endl;
 
 	vector<float> weights;
-	int n = dataset.output.size();
-	vector<float> y = dataset.output;
+	int n = training_set.output.size();
+	int m = testing_set.output.size();
+	vector<float> y = training_set.output;
 	vector<float> d;
 	float a;
 	float error;
@@ -131,7 +134,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		weights.push_back(1.0 / n);
 	}
 	
-	Data reduced_dataset = dataset;
+	Data reduced_dataset = training_set;
 	vector<float> trimmed_weights = weights;
 	vector<float> trim_indices;
 
@@ -178,7 +181,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset, i));
+			d.push_back(classifier.Classify(training_set, i));
 		}
 
 		error = 0;
@@ -205,16 +208,17 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		d.clear();
 		
-		reduced_dataset = dataset;
+		reduced_dataset = training_set;
 		trimmed_weights = weights;
 	}
 
 	float result = 0;
-	for (int i = 0; i < n; i++)
+	y = testing_set.output;
+	for (int i = 0; i < m; i++)
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(testing_set, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -222,21 +226,22 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		result = 0;
 	}
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < m; i++)
 	{
-		if (d[i] != y[i]) err += 1.0f / n;
+		if (d[i] != y[i]) err += 1.0f / m;
 	}
 
 	return d;
 }
 
-vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int sample_quantity)
+vector<float> AdaBoost::WeightTrimmingBoost(Data training_set, Data testing_set, DecisionStump classifier, int T, float beta, int sample_quantity)
 {
 	cout << "WeightTrimmingBoost: Training in progress..." << endl;
 
 	vector<float> weights;
-	int n = dataset.output.size();
-	vector<float> y = dataset.output;
+	int n = training_set.output.size();
+	int m = testing_set.output.size();
+	vector<float> y = training_set.output;
 	vector<float> d;
 	float a;
 	float error;
@@ -247,7 +252,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		weights.push_back(1.0 / n);
 	}
 	
-	Data reduced_dataset = dataset;
+	Data reduced_dataset = training_set;
 	vector<float> trimmed_weights = weights;
 	int trim_idx;
 	vector<int> trim_indices(n);
@@ -300,7 +305,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset, i));
+			d.push_back(classifier.Classify(training_set, i));
 		}
 
 		error = 0;
@@ -327,16 +332,17 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		d.clear();
 
-		reduced_dataset = dataset;
+		reduced_dataset = training_set;
 		trimmed_weights = weights;
 	}
 
 	float result = 0;
-	for (int i = 0; i < n; i++)
+	y = testing_set.output;
+	for (int i = 0; i < m; i++)
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(testing_set, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -350,6 +356,11 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	}
 
 	return d;
+}
+
+void AdaBoost::PrintError()
+{
+	cout << "Error: " << err << endl;
 }
 
 void AdaBoost::PrintResult()
@@ -376,7 +387,7 @@ void AdaBoost::PrintResult()
 		}
 	}
 	cout << endl;
-	cout << "Error: " << err << endl;
+	PrintError();
 }
 
 void AdaBoost::Reset()
