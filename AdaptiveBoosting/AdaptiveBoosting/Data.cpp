@@ -41,9 +41,18 @@ bool Data::LoadFile(string filename)
 
 	file.close();
 
+	SplitSamples(0.7);
+
 	TransposeDataMatrix(data_container);
+	SelectOutput(data_container, output, data_container.size()-1);
+
+	TransposeDataMatrix(training_set);
 	CreateSortedIndexesMatrix();
-	SelectOutput(data_container.size()-1);
+	SelectOutput(training_set, training_output, training_set.size() - 1);
+
+	TransposeDataMatrix(testing_set);
+	SelectOutput(testing_set, testing_output, testing_set.size() - 1);
+	
 }
 
 bool Data::SaveFile(string filename)
@@ -90,20 +99,20 @@ void Data::TransposeDataMatrix(vector<vector<float>> &b)
 	b = trans_vec;
 }
 
-void Data::SelectOutput(int attribute)
+void Data::SelectOutput(vector<vector<float>> &set, vector<float> &d, int attribute)
 {
-	for (int i = 0; i < data_container[attribute].size(); i++)
+	for (int i = 0; i < set[attribute].size(); i++)
 	{
-		if (data_container[attribute][i] == 0)
+		if (set[attribute][i] == 0)
 		{
-			output.push_back(-1);
+			d.push_back(-1);
 		}
 		else
 		{
-			output.push_back(data_container[attribute][i]);
+			d.push_back(set[attribute][i]);
 		}
 	}
-	data_container.erase(data_container.begin() + attribute);
+	set.erase(set.begin() + attribute);
 }
 
 void Data::SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int feature)
@@ -113,13 +122,45 @@ void Data::SortIndexes(const vector<vector<float>> &X, vector<int> &idx, int fea
 
 void Data::CreateSortedIndexesMatrix()
 {
-	vector<int> Indices(data_container[0].size());
+	vector<int> Indices(training_set[0].size());
 	iota(begin(Indices), end(Indices), 0);
 
-	for (int i = 0; i < data_container.size(); i++)
+	for (int i = 0; i < training_set.size(); i++)
 	{
 		vector<int> sorted = Indices;
-		SortIndexes(data_container, sorted, i);
+		SortIndexes(training_set, sorted, i);
 		sorted_indices.push_back(sorted);
+	}
+}
+
+void Data::SplitSamples(float percent)
+{
+	int n = data_container.size() * percent;
+	int m = data_container.size() - n;
+	int idx = rand() % data_container.size();
+	vector<int> indices;
+	int i = 0;
+
+	while (i < n)
+	{
+		if (std::find(indices.begin(), indices.end(), idx) != indices.end())
+		{
+			idx = rand() % data_container.size();
+		}
+		else
+		{
+			indices.push_back(idx);
+			training_set.push_back(data_container[idx]);
+			i++;
+			idx = rand() % data_container.size();
+		}
+	}
+
+	for (int j = 0; j < data_container.size(); j++)
+	{
+		if (std::find(indices.begin(), indices.end(), j) == indices.end())
+		{
+			testing_set.push_back(data_container[j]);
+		}
 	}
 }

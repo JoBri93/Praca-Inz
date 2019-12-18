@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Data training_set[3], testing_set[3];
+Data dataset[3];
 DecisionStump classifier;
 AdaBoost adaboost;
 
@@ -19,26 +19,21 @@ int main()
 	srand(time(NULL));
 	clock_t begin, end;
 	double time_spent;
-	int iterations[3] = { 400, 400, 20 };
-	int max_samples[3] = { 8, 10, 10 };
+	int iterations[3] = { 800, 800, 40 };
+	int max_samples[3] = { 10, 10, 10 };
 	
-	training_set[0].LoadFile("../Data/training_set1-cryotherapy.txt");
-	testing_set[0].LoadFile("../Data/testing_set1-cryotherapy.txt");
-
-	training_set[1].LoadFile("../Data/training_set2-fertility.txt");
-	testing_set[1].LoadFile("../Data/testing_set2-fertility.txt");
-
-	training_set[2].LoadFile("../Data/training_set3-parkinsons.txt");
-	testing_set[2].LoadFile("../Data/testing_set3-parkinsons.txt");
+	dataset[0].LoadFile("../Data/dataset1-cryotherapy.txt");
+	dataset[1].LoadFile("../Data/dataset2-fertility_diagnosis.txt");
+	dataset[2].LoadFile("../Data/dataset3-parkinsons.txt");
 
     cout << "Welcome to ADABOOST!\n" << endl; 
-
+	
 	for (int i = 0; i < 3; i++)
 	{
 		cout << "Dataset " << i+1 << endl << endl;
 
 		begin = clock();
-		adaboost.Boost(training_set[i], testing_set[i], classifier, iterations[i]);
+		adaboost.Boost(dataset[i], classifier, iterations[i]);
 		end = clock();
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		adaboost.PrintError();
@@ -47,7 +42,7 @@ int main()
 		adaboost.Reset();
 
 		begin = clock();
-		adaboost.WeightTrimmingBoost(training_set[i], testing_set[i], classifier, iterations[i], 0.1f, max_samples[i]);
+		adaboost.WeightTrimmingBoost(dataset[i], classifier, iterations[i], 0.1f, max_samples[i]);
 		end = clock();
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		adaboost.PrintError();
@@ -56,7 +51,7 @@ int main()
 		adaboost.Reset();
 
 		begin = clock();
-		adaboost.WeightTrimmingBoost(training_set[i], testing_set[i], classifier, iterations[i]);
+		adaboost.WeightTrimmingBoost(dataset[i], classifier, iterations[i]);
 		end = clock();
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		adaboost.PrintError();

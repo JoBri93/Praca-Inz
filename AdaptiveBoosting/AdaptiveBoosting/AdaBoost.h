@@ -12,9 +12,9 @@ private:
 	float err;
 
 public:
-	vector<float> Boost(Data training_set, Data testing_set, DecisionStump classifier,int T);
-	vector<float> WeightTrimmingBoost(Data training_set, Data testing_set, DecisionStump classifier, int T);
-	vector<float> WeightTrimmingBoost(Data training_set, Data testing_set, DecisionStump classifier, int T, float beta, int sample_quantity);
+	vector<float> Boost(Data dataset, DecisionStump classifier,int T);
+	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T);
+	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int sample_quantity);
 	float FindQuantile(vector<float> weights);
 	void PrintError();
 	void PrintResult();

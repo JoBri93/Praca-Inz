@@ -10,23 +10,23 @@ DecisionStump::~DecisionStump()
 {
 }
 
-int DecisionStump::Classify(Data dataset,int decision_attribute, int sample, float decision_condition, bool greater_than)
+int DecisionStump::Classify(vector<vector<float>> set, int decision_attribute, int sample, float decision_condition, bool greater_than)
 {
 	int result;
 	if (greater_than)
 	{
-		if (dataset.data_container[decision_attribute][sample] > decision_condition) result = 1;
+		if (set[decision_attribute][sample] > decision_condition) result = 1;
 		else result = -1;
 	}
 	else
 	{
-		if (dataset.data_container[decision_attribute][sample] <= decision_condition) result = 1;
+		if (set[decision_attribute][sample] <= decision_condition) result = 1;
 		else result = -1;
 	}
 	return result;
 }
 
-int DecisionStump::Classify(Data dataset, int sample)
+int DecisionStump::Classify(vector<vector<float>> set, int sample)
 {
 	int result;
 
@@ -36,12 +36,12 @@ int DecisionStump::Classify(Data dataset, int sample)
 
 	if (greater_than)
 	{
-		if (dataset.data_container[decision_attribute][sample] > decision_condition) result = 1;
+		if (set[decision_attribute][sample] > decision_condition) result = 1;
 		else result = -1;
 	}
 	else
 	{
-		if (dataset.data_container[decision_attribute][sample] <= decision_condition) result = 1;
+		if (set[decision_attribute][sample] <= decision_condition) result = 1;
 		else result = -1;
 	}
 	return result;
@@ -53,8 +53,8 @@ void DecisionStump::Train(Data dataset)
 	float threshold, prev_threshold = FLT_MAX;
 	int idx, idx_next;
 	int d;
-	int m = dataset.data_container.size();
-	int n = dataset.output.size();
+	int m = dataset.training_set.size();
+	int n = dataset.training_output.size();
 
 	for (int i=0; i < m; i++)
 	{
@@ -62,15 +62,15 @@ void DecisionStump::Train(Data dataset)
 		{
 			idx = dataset.sorted_indices[i][j];
 			idx_next = dataset.sorted_indices[i][j + 1];
-			threshold = (dataset.data_container[i][idx] + dataset.data_container[i][idx_next]) / 2;
+			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
 
 			err_temp = 0;
 			if (threshold != prev_threshold)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset, i, k, threshold, false);
-					if (d != dataset.output[k]) err_temp += 1.0f;
+					d = Classify(dataset.training_set, i, k, threshold, false);
+					if (d != dataset.training_output[k]) err_temp += 1.0f;
 				}
 				if (err_temp < error)
 				{
@@ -87,8 +87,8 @@ void DecisionStump::Train(Data dataset)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset, i, k, threshold, true);
-					if (d != dataset.output[k]) err_temp += 1.0f;
+					d = Classify(dataset.training_set, i, k, threshold, true);
+					if (d != dataset.training_output[k]) err_temp += 1.0f;
 				}
 				if (err_temp < error)
 				{
@@ -111,8 +111,8 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 	float threshold, prev_threshold = FLT_MAX;;
 	int idx, idx_next;
 	int d;
-	int m = dataset.data_container.size();
-	int n = dataset.output.size();
+	int m = dataset.training_set.size();
+	int n = dataset.training_output.size();
 
 	for (int i = 0; i < m; i++)
 	{
@@ -120,15 +120,15 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 		{
 			idx = dataset.sorted_indices[i][j];
 			idx_next = dataset.sorted_indices[i][j + 1];
-			threshold = (dataset.data_container[i][idx] + dataset.data_container[i][idx_next]) / 2;
+			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
 
 			err_temp = 0;
 			if (threshold != prev_threshold)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset, i, k, threshold, false);
-					if (d != dataset.output[k]) err_temp += weights[k];
+					d = Classify(dataset.training_set, i, k, threshold, false);
+					if (d != dataset.training_output[k]) err_temp += weights[k];
 				}
 				if (err_temp < error)
 				{
@@ -144,8 +144,8 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset, i, k, threshold, true);
-					if (d != dataset.output[k]) err_temp += weights[k];
+					d = Classify(dataset.training_set, i, k, threshold, true);
+					if (d != dataset.training_output[k]) err_temp += weights[k];
 				}
 				if (err_temp < error)
 				{
