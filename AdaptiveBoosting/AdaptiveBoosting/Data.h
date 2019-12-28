@@ -18,18 +18,16 @@ private:
 public:
 	vector<string> categories_container;
 	vector<vector<float>> data_container;
-	
-	vector<vector<float>> training_set;
-	vector<vector<float>> testing_set;
-	
-	vector<float> training_output;
-	vector<float> testing_output;
-
-	vector<vector<int>> sorted_indices;
 	vector<float> output;
 
+	vector<vector<float>> training_set;
+	vector<float> training_output;	
+	vector<vector<int>> training_set_sorted_indices;
+
+	vector<vector<float>> testing_set;
+	vector<float> testing_output;
+
 	bool LoadFile(string filename);
-	bool SaveFile(string filename);
 	void CreateSortedIndexesMatrix();
 	void SelectOutput(vector<vector<float>> &set, vector<float> &d, int attribute);
 	void SplitSamples(float percent);

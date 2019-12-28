@@ -51,34 +51,7 @@ bool Data::LoadFile(string filename)
 	SelectOutput(training_set, training_output, training_set.size() - 1);
 
 	TransposeDataMatrix(testing_set);
-	SelectOutput(testing_set, testing_output, testing_set.size() - 1);
-	
-}
-
-bool Data::SaveFile(string filename)
-{
-	TransposeDataMatrix(data_container);
-
-	ofstream file(filename);
-	if (file.fail())
-		return 1;
-
-	for (int i = 0; i < categories_container.size(); i++)
-	{
-		file << categories_container[i];
-		file << ";";
-	}
-	file << endl;
-	for (int j = 0; j < data_container.size(); j++)
-	{
-		for (int k = 0; k < data_container[j].size(); k++)
-		{
-			file << data_container[j][k];
-			file << ";";
-		}
-		file << endl;
-	}
-	file.close();
+	SelectOutput(testing_set, testing_output, testing_set.size() - 1);	
 }
 
 void Data::TransposeDataMatrix(vector<vector<float>> &b)
@@ -129,21 +102,20 @@ void Data::CreateSortedIndexesMatrix()
 	{
 		vector<int> sorted = Indices;
 		SortIndexes(training_set, sorted, i);
-		sorted_indices.push_back(sorted);
+		training_set_sorted_indices.push_back(sorted);
 	}
 }
 
 void Data::SplitSamples(float percent)
 {
 	int n = data_container.size() * percent;
-	int m = data_container.size() - n;
 	int idx = rand() % data_container.size();
 	vector<int> indices;
+	
 	int i = 0;
-
 	while (i < n)
 	{
-		if (std::find(indices.begin(), indices.end(), idx) != indices.end())
+		if (find(indices.begin(), indices.end(), idx) != indices.end())
 		{
 			idx = rand() % data_container.size();
 		}
@@ -158,7 +130,7 @@ void Data::SplitSamples(float percent)
 
 	for (int j = 0; j < data_container.size(); j++)
 	{
-		if (std::find(indices.begin(), indices.end(), j) == indices.end())
+		if (find(indices.begin(), indices.end(), j) == indices.end())
 		{
 			testing_set.push_back(data_container[j]);
 		}

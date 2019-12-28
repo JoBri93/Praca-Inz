@@ -60,8 +60,8 @@ void DecisionStump::Train(Data dataset)
 	{
 		for (int j=0; j<n-1; j++)
 		{
-			idx = dataset.sorted_indices[i][j];
-			idx_next = dataset.sorted_indices[i][j + 1];
+			idx = dataset.training_set_sorted_indices[i][j];
+			idx_next = dataset.training_set_sorted_indices[i][j + 1];
 			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
 
 			err_temp = 0;
@@ -78,7 +78,6 @@ void DecisionStump::Train(Data dataset)
 					trained_parameters.threshold = threshold;
 					trained_parameters.is_greater_than = false;
 					error = err_temp;
-					break;
 				}
 			}
 
@@ -96,7 +95,6 @@ void DecisionStump::Train(Data dataset)
 					trained_parameters.threshold = threshold;
 					trained_parameters.is_greater_than = true;
 					error = err_temp;
-					break;
 				}
 			}
 
@@ -118,8 +116,8 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 	{
 		for (int j = 0; j < n-1; j++)
 		{
-			idx = dataset.sorted_indices[i][j];
-			idx_next = dataset.sorted_indices[i][j + 1];
+			idx = dataset.training_set_sorted_indices[i][j];
+			idx_next = dataset.training_set_sorted_indices[i][j + 1];
 			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
 
 			err_temp = 0;
