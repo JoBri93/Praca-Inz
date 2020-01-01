@@ -53,23 +53,23 @@ void DecisionStump::Train(Data dataset)
 	float threshold, prev_threshold = FLT_MAX;
 	int idx, idx_next;
 	int d;
-	int m = dataset.training_set.size();
+	int m = dataset.training_input.size();
 	int n = dataset.training_output.size();
 
 	for (int i=0; i < m; i++)
 	{
-		for (int j=0; j<n-1; j++)
+		for (int j=0; j < n-1; j++)
 		{
 			idx = dataset.training_set_sorted_indices[i][j];
 			idx_next = dataset.training_set_sorted_indices[i][j + 1];
-			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
+			threshold = (dataset.training_input[i][idx] + dataset.training_input[i][idx_next]) / 2;
 
 			err_temp = 0;
 			if (threshold != prev_threshold)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset.training_set, i, k, threshold, false);
+					d = Classify(dataset.training_input, i, k, threshold, false);
 					if (d != dataset.training_output[k]) err_temp += 1.0f;
 				}
 				if (err_temp < error)
@@ -86,7 +86,7 @@ void DecisionStump::Train(Data dataset)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset.training_set, i, k, threshold, true);
+					d = Classify(dataset.training_input, i, k, threshold, true);
 					if (d != dataset.training_output[k]) err_temp += 1.0f;
 				}
 				if (err_temp < error)
@@ -109,7 +109,7 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 	float threshold, prev_threshold = FLT_MAX;;
 	int idx, idx_next;
 	int d;
-	int m = dataset.training_set.size();
+	int m = dataset.training_input.size();
 	int n = dataset.training_output.size();
 
 	for (int i = 0; i < m; i++)
@@ -118,14 +118,14 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 		{
 			idx = dataset.training_set_sorted_indices[i][j];
 			idx_next = dataset.training_set_sorted_indices[i][j + 1];
-			threshold = (dataset.training_set[i][idx] + dataset.training_set[i][idx_next]) / 2;
+			threshold = (dataset.training_input[i][idx] + dataset.training_input[i][idx_next]) / 2;
 
 			err_temp = 0;
 			if (threshold != prev_threshold)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset.training_set, i, k, threshold, false);
+					d = Classify(dataset.training_input, i, k, threshold, false);
 					if (d != dataset.training_output[k]) err_temp += weights[k];
 				}
 				if (err_temp < error)
@@ -142,7 +142,7 @@ void DecisionStump::Train(Data dataset, vector<float> weights)
 			{
 				for (int k = 0; k < n; k++)
 				{
-					d = Classify(dataset.training_set, i, k, threshold, true);
+					d = Classify(dataset.training_input, i, k, threshold, true);
 					if (d != dataset.training_output[k]) err_temp += weights[k];
 				}
 				if (err_temp < error)

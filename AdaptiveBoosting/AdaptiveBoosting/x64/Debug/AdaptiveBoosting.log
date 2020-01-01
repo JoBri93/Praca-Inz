@@ -14,35 +14,35 @@ d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosti
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(147): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(190): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(157): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(199): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(248): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(249): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(258): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(160): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(271): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(162): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(281): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
           with
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(184): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(284): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
           with
           [
               _Ty=float
           ]
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(193): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(242): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(243): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(252): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(286): warning C4244: 'argument': conversion from '_Ty' to 'const __int64', possible loss of data
           with
           [
               _Ty=float
@@ -78,7 +78,7 @@ c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.
               _RanIt=float *,
               _Pr=std::greater<int>
           ]
-  d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(151): note: see reference to function template instantiation 'void std::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::greater<int>>(const _RanIt,const _RanIt,_Pr)' being compiled
+  d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaboost.cpp(275): note: see reference to function template instantiation 'void std::sort<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::greater<int>>(const _RanIt,const _RanIt,_Pr)' being compiled
           with
           [
               _Ty=float,
@@ -129,20 +129,21 @@ c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.
               _Ty=int
           ]
   AdaptiveBoosting.cpp
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaptiveboosting.cpp(20): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\adaptiveboosting.cpp(19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Data.cpp
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(44): warning C4305: 'argument': truncation from 'double' to 'float'
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(47): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(51): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(54): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(139): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(112): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(153): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(158): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(161): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   DecisionStump.cpp
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(56): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(57): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(114): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(115): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(112): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\decisionstump.cpp(113): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(82): warning C4715: 'Data::SaveFile': not all control paths return a value
-d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(56): warning C4715: 'Data::LoadFile': not all control paths return a value
+d:\moje dokumenty\studia\informatyka\praca inżynierska\praca-inz\adaptiveboosting\adaptiveboosting\data.cpp(55): warning C4715: 'Data::LoadFile': not all control paths return a value
   AdaptiveBoosting.vcxproj -> D:\Moje dokumenty\Studia\Informatyka\Praca inżynierska\Praca-Inz\AdaptiveBoosting\x64\Debug\AdaptiveBoosting.exe

@@ -20,10 +20,7 @@ int main()
 	clock_t begin, end;
 	double time_spent;
 
-	//iterations = { {200, 400, 800}, {200, 400, 800}, {20, 40, 60} };
-	//max_samples = { {5, 10, 15}, {5, 10, 15}, {5, 10, 15}};
-	
-	int idx, iterations, max_samples;
+	int idx, iterations, max_samples, number_of_tests;
 	float beta;
 
 	dataset[0].LoadFile("../Data/dataset1-cryotherapy.txt");
@@ -32,62 +29,82 @@ int main()
 
     cout << "Welcome to ADABOOST!\n" << endl;
 	cout << "Available datasets:" << endl;
-	cout << "1. Cryotherapy (" << dataset[0].categories_container.size() - 1 << " attributes, " << dataset[0].output.size() << " samples)" << endl;
-	cout << "2. Fertility diagnosis (" << dataset[1].categories_container.size() - 1 << " attributes, " << dataset[1].output.size() << " samples)" << endl;
-	cout << "3. Parkinsons (" << dataset[2].categories_container.size() - 1 << " attributes, " << dataset[2].output.size() << " samples)" << endl << endl;
+	cout << "1. Cryotherapy (" << dataset[0].input.size() << " attributes, " << dataset[0].output.size() << " samples)" << endl;
+	cout << "2. Fertility diagnosis (" << dataset[1].input.size() << " attributes, " << dataset[1].output.size() << " samples)" << endl;
+	cout << "3. Parkinsons (" << dataset[2].input.size() << " attributes, " << dataset[2].output.size() << " samples)" << endl << endl;
 
 	cout << "Choose dataset: ";
 	cin >> idx;
-
-	if (idx < 1 || idx > 3)
+	while (idx < 1 || idx > 3)
 	{
-		cout << "There is no dataset " << idx << "!" << endl;
+		cout << "There is no dataset " << idx << "! Try again: ";
+		cin >> idx;
 	}
-	else
+	idx = idx - 1;
+
+	cout << "Enter number of iterations: ";
+	cin >> iterations;
+	while (iterations < 1)
 	{
-		idx = idx - 1;
-		cout << "Enter number of iterations: ";
+		cout << "Wrong number of iterations! Try again: ";
 		cin >> iterations;
+	}
 
-		cout << "For WeightTrimmingBoost: enter beta value (between 0.01 and 0.1): ";
+	cout << "For WeightTrimmingBoost: enter beta value (between 0.01 and 0.1): ";
+	cin >> beta;
+	while (beta < 0.01f || beta > 0.1f)
+	{
+		cout << "Wrong beta value! Try again: ";
 		cin >> beta;
-		if (beta < 0.01f || beta > 0.1f)
-		{
-			cout << "Wrong beta value!" << endl;
-		}
-		else
-		{
-			cout << "For WeightTrimmingBoost (type 1): enter max number of samples to cut: ";
-			cin >> max_samples;
+	}
 
-			cout << endl << "Dataset " << idx + 1 << ": " << iterations << " iterations, beta value - " << beta << ", samples to cut - " << max_samples << endl << endl;
+	cout << "For WeightTrimmingBoost (type 1): enter max number of samples to cut: ";
+	cin >> max_samples;
+	while (max_samples < 0)
+	{
+		cout << "Wrong number of samples! Try again: ";
+		cin >> max_samples;
+	}
 
-			begin = clock();
-			adaboost.Boost(dataset[idx], classifier, iterations);
-			end = clock();
-			time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-			adaboost.PrintError();
-			cout << "Time: " << time_spent << " seconds" << endl << endl;
+	cout << "Enter number of tests to perform: ";
+	cin >> number_of_tests;
+	while (number_of_tests < 1)
+	{
+		cout << "Wrong number of tests! Try again: ";
+		cin >> number_of_tests;
+	}
 
-			adaboost.Reset();
+	cout << endl << "Dataset " << idx + 1 << ": " << iterations << " iterations, beta value = " << beta << ", samples to cut = " << max_samples << endl << endl;
+	for (int i = 0; i < number_of_tests; i++)
+	{
+		cout << "---------- Test " << i + 1 << " ----------" << endl << endl;
 
-			begin = clock();
-			adaboost.WeightTrimmingBoost(dataset[idx], classifier, iterations, beta, max_samples);
-			end = clock();
-			time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-			adaboost.PrintError();
-			cout << "Time: " << time_spent << " seconds" << endl << endl;
+		begin = clock();
+		adaboost.Boost(dataset[idx], classifier, iterations);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		adaboost.PrintError();
+		cout << "Time: " << time_spent << " seconds" << endl << endl;
 
-			adaboost.Reset();
+		adaboost.Reset();
+		
+		begin = clock();
+		adaboost.WeightTrimmingBoost(dataset[idx], classifier, iterations, beta, max_samples);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		adaboost.PrintError();
+		cout << "Time: " << time_spent << " seconds" << endl << endl;
 
-			begin = clock();
-			adaboost.WeightTrimmingBoost(dataset[idx], classifier, iterations, beta);
-			end = clock();
-			time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-			adaboost.PrintError();
-			cout << "Time: " << time_spent << " seconds" << endl << endl;
+		adaboost.Reset();
 
-			adaboost.Reset();
-		}
+		begin = clock();
+		adaboost.WeightTrimmingBoost(dataset[idx], classifier, iterations, beta);
+		end = clock();
+		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+		adaboost.PrintError();
+		cout << "Time: " << time_spent << " seconds" << endl << endl;
+
+		adaboost.Reset();
+		dataset[idx].ReloadTrainingAndTestingSets();
 	}
 }

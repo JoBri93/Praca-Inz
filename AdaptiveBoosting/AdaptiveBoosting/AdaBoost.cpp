@@ -66,7 +66,7 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset.training_set, i));
+			d.push_back(classifier.Classify(dataset.training_input, i));
 		}
 
 		error = 0;
@@ -100,7 +100,7 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_set, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_input, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -113,6 +113,7 @@ vector<float> AdaBoost::Boost(Data dataset, DecisionStump classifier, int T)
 		if (d[i] != y[i]) classification_error += 1.0f / m;
 	}
 
+	cout << "Training complete!" << endl;
 	return d;
 }
 
@@ -161,9 +162,9 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		for (int i = 0; i < trim_indices.size() ; i++)
 		{
 			reduced_dataset.training_output.erase(reduced_dataset.training_output.begin() + trim_indices[i]);
-			for (int j = 0; j < reduced_dataset.training_set.size(); j++)
+			for (int j = 0; j < reduced_dataset.training_input.size(); j++)
 			{
-				reduced_dataset.training_set[j].erase(reduced_dataset.training_set[j].begin() + trim_indices[i]);
+				reduced_dataset.training_input[j].erase(reduced_dataset.training_input[j].begin() + trim_indices[i]);
 			}
 			trimmed_weights.erase(trimmed_weights.begin() + trim_indices[i]);
 		}
@@ -187,7 +188,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset.training_set, i));
+			d.push_back(classifier.Classify(dataset.training_input, i));
 		}
 
 		error = 0;
@@ -224,7 +225,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_set, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_input, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -237,6 +238,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		if (d[i] != y[i]) classification_error += 1.0f / n;
 	}
 
+	cout << "Training complete!" << endl;
 	return d;
 }
 
@@ -279,9 +281,9 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 			for (int i = 0; i < trim_indices.size(); i++)
 			{
 				reduced_dataset.training_output.erase(reduced_dataset.training_output.begin() + trim_indices[i]);
-				for (int j = 0; j < reduced_dataset.training_set.size(); j++)
+				for (int j = 0; j < reduced_dataset.training_input.size(); j++)
 				{
-					reduced_dataset.training_set[j].erase(reduced_dataset.training_set[j].begin() + trim_indices[i]);
+					reduced_dataset.training_input[j].erase(reduced_dataset.training_input[j].begin() + trim_indices[i]);
 				}
 				trimmed_weights.erase(trimmed_weights.begin() + trim_indices[i]);
 			}
@@ -305,7 +307,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 
 		for (int i = 0; i < n; i++)
 		{
-			d.push_back(classifier.Classify(dataset.training_set, i));
+			d.push_back(classifier.Classify(dataset.training_input, i));
 		}
 
 		error = 0;
@@ -342,7 +344,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	{
 		for (int t = 0; t < T; t++)
 		{
-			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_set, i);
+			result = result + alphas[t] * weak_classifiers[t].Classify(dataset.testing_input, i);
 		}
 		if (result > 0) d.push_back(1);
 		else d.push_back(-1);
@@ -355,6 +357,7 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 		if (d[i] != y[i]) classification_error += 1.0f / m;
 	}
 
+	cout << "Training complete!" << endl;
 	return d;
 }
 
@@ -365,7 +368,7 @@ void AdaBoost::PrintError()
 
 void AdaBoost::PrintResult()
 {
-	cout << "Training complete! Here are the results: " << endl << endl;
+	cout << "Here are the results: " << endl << endl;
 	cout << "Alpha values" << endl;
 	for (int i = 0; i < alphas.size(); i++)
 	{
