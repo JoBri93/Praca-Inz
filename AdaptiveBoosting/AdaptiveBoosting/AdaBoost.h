@@ -3,6 +3,7 @@
 #include <vector>
 #include "DecisionStump.h"
 #include <math.h>
+#include <iostream>
 
 class AdaBoost
 {
@@ -17,6 +18,7 @@ public:
 	vector<float> Boost(Data dataset, DecisionStump classifier,int T);
 	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta);
 	vector<float> WeightTrimmingBoost(Data dataset, DecisionStump classifier, int T, float beta, int max_cut_samples);
+	float GetError();
 	void PrintError();
 	void PrintResult();
 	void Reset();

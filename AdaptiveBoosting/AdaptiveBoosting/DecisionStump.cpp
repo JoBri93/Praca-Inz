@@ -106,7 +106,7 @@ void DecisionStump::Train(Data dataset)
 void DecisionStump::Train(Data dataset, vector<float> weights)
 {
 	float error = FLT_MAX, err_temp;
-	float threshold, prev_threshold = FLT_MAX;;
+	float threshold, prev_threshold = FLT_MAX;
 	int idx, idx_next;
 	int d;
 	int m = dataset.training_input.size();

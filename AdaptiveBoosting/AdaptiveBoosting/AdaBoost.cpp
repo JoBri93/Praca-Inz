@@ -361,6 +361,11 @@ vector<float> AdaBoost::WeightTrimmingBoost(Data dataset, DecisionStump classifi
 	return d;
 }
 
+float AdaBoost::GetError()
+{
+	return classification_error;
+}
+
 void AdaBoost::PrintError()
 {
 	cout << "Error: " << classification_error << endl;
