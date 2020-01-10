@@ -1,10 +1,5 @@
 #pragma once
 
-#include <vector>
-#include "DecisionStump.h"
-#include <math.h>
-#include <iostream>
-
 class AdaBoost
 {
 private:

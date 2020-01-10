@@ -2,11 +2,6 @@
 //
 
 #include "pch.h"
-#include "Data.h"
-#include "DecisionStump.h"
-#include "AdaBoost.h"
-#include "Test.h"
-#include <time.h>
 
 Test test;
 
@@ -15,6 +10,7 @@ int main()
 	srand(time(NULL));
 
 	cout << "Welcome to ADABOOST!\n" << endl;
+	test.PrintAvailableDatasets();
 	test.TakeParameters();
 	test.PerformTest();
 	test.SaveResults();

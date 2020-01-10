@@ -11,4 +11,18 @@
 
 // TODO: add headers that you want to pre-compile here
 
+using namespace std;
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <time.h>
+#include "Data.h"
+#include "DecisionStump.h"
+#include "AdaBoost.h"
+#include "Test.h"
+
 #endif //PCH_H

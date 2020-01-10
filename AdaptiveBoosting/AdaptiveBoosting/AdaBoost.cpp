@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "AdaBoost.h"
 
+
 AdaBoost::AdaBoost()
 {
 }

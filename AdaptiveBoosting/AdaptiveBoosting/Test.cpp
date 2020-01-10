@@ -7,11 +7,6 @@ Test::Test()
 	dataset[0].LoadFile("../Data/dataset1-cryotherapy.txt");
 	dataset[1].LoadFile("../Data/dataset2-fertility_diagnosis.txt");
 	dataset[2].LoadFile("../Data/dataset3-parkinsons.txt");
-
-	cout << "Available datasets:" << endl;
-	cout << "1. Cryotherapy (" << dataset[0].input.size() << " attributes, " << dataset[0].output.size() << " samples)" << endl;
-	cout << "2. Fertility diagnosis (" << dataset[1].input.size() << " attributes, " << dataset[1].output.size() << " samples)" << endl;
-	cout << "3. Parkinsons (" << dataset[2].input.size() << " attributes, " << dataset[2].output.size() << " samples)" << endl << endl;
 }
 
 
@@ -19,6 +14,13 @@ Test::~Test()
 {
 }
 
+void Test::PrintAvailableDatasets()
+{
+	cout << "Available datasets:" << endl;
+	cout << "1. Cryotherapy (" << dataset[0].input.size() << " attributes, " << dataset[0].output.size() << " samples)" << endl;
+	cout << "2. Fertility diagnosis (" << dataset[1].input.size() << " attributes, " << dataset[1].output.size() << " samples)" << endl;
+	cout << "3. Parkinsons (" << dataset[2].input.size() << " attributes, " << dataset[2].output.size() << " samples)" << endl << endl;
+}
 
 void Test::TakeParameters()
 {

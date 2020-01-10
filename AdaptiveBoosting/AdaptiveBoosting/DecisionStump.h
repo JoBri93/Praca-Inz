@@ -1,15 +1,5 @@
 #pragma once
 
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-#include <numeric>
-#include <vector>
-#include "Data.h"
-
-using namespace std;
-
 struct parameters {
 	int attr;
 	float threshold;

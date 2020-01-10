@@ -1,14 +1,5 @@
 #pragma once
 
-#include "Data.h"
-#include "DecisionStump.h"
-#include "AdaBoost.h"
-#include <time.h>
-#include <string>
-#include <iostream>
-
-using namespace std;
-
 class Test
 {
 private:
@@ -26,6 +17,7 @@ private:
 	bool SaveErrorResults(string filename);
 
 public:
+	void PrintAvailableDatasets();
 	void TakeParameters();
 	void PerformTest();
 	void SaveResults();
