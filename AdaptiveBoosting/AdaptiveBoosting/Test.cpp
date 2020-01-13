@@ -114,7 +114,7 @@ void Test::PerformTest()
 
 bool Test::SaveTimeResults(string filename)
 {
-	ofstream file(filename, ios::out);
+	ofstream file(filename);
 	if (file.fail())
 		return 1;
 

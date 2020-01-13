@@ -15,7 +15,7 @@ Data::~Data()
 bool Data::LoadFile(string filename)
 {
 	ifstream file;
-	file.open(filename.c_str(), ios::in);
+	file.open(filename.c_str());
 	if (file.fail())
 		return 1;
 
